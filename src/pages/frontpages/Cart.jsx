@@ -74,7 +74,11 @@ function Cart() {
   };
 
   const getPrice = (price) => {
-    return Number(price.replace("Rp", "").replace(/\./g, ""));
+    if (typeof price === "number") return price;
+    if (typeof price === "string") {
+      return Number(price.replace(/[^0-9]/g, "")) || 0;
+    }
+    return 0;
   };
 
   const formatRupiah = (number) => {
@@ -148,7 +152,9 @@ function Cart() {
                       </div>
 
                       <p className="text-blue-600 font-bold text-lg mt-4">
-                        {item.price}
+                        {typeof item.price === "string" && item.price.startsWith("Rp")
+                          ? item.price
+                          : formatRupiah(getPrice(item.price))}
                       </p>
 
                       <div className="flex flex-wrap items-center justify-between gap-4 mt-5">

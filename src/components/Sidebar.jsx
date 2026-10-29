@@ -21,6 +21,15 @@ function Sidebar() {
         >
           About
         </Link>
+
+        <hr className="border-gray-700 my-2" />
+
+        <Link
+          to="/"
+          className="text-blue-400 hover:text-blue-300 font-medium"
+        >
+          ← Kembali ke Toko
+        </Link>
       </nav>
     </aside>
   )

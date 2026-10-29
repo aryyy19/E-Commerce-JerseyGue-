@@ -17,7 +17,11 @@ function Checkout() {
   const [orderSuccess, setOrderSuccess] = useState(false);
 
   const getPrice = (price) => {
-    return Number(price.replace("Rp", "").replace(/\./g, ""));
+    if (typeof price === "number") return price;
+    if (typeof price === "string") {
+      return Number(price.replace(/[^0-9]/g, "")) || 0;
+    }
+    return 0;
   };
 
   const formatRupiah = (number) => {
@@ -236,7 +240,10 @@ function Checkout() {
                       <p className="font-semibold">{item.name}</p>
 
                       <p className="text-sm text-gray-500">
-                        {item.quantity || 1} × {item.price}
+                        {item.quantity || 1} ×{" "}
+                        {typeof item.price === "string" && item.price.startsWith("Rp")
+                          ? item.price
+                          : formatRupiah(getPrice(item.price))}
                       </p>
                     </div>
 
